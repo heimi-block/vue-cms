@@ -1,0 +1,132 @@
+.bg-header {
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, .1);
+    background: #ffffff;
+}
+
+.section-header {
+    padding: 1rem .5rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 200;
+}
+
+.grid-header .navbar {
+    height: 4rem;
+}
+
+.grid-header .navbar-section {
+    padding: 0;
+}
+
+.grid-header .navbar-brand {
+    color: #50596c;
+}
+
+.grid-header .btn-link {
+    color: #667189;
+    padding-left: .6rem;
+    padding-right: .6rem;
+}
+
+.grid-header .btn-link:focus,
+.grid-header .btn-link:hover,
+.grid-header .btn-link:active {
+    color: #50596c;
+    opacity: .75;
+}
+
+.docs-sidebar {
+    /* max-width: 150px; */
+    box-shadow: 5px 0 15px #eee;
+}
+
+@media screen and (min-width: 601px) {
+    .section-header .navbar-section {
+        padding: 0 .5rem;
+    }
+
+    .docs-sidebar {
+        padding: 7rem 1rem 5rem 1rem;
+    }
+
+    .docs-sidebar .docs-nav {
+        position: relative;
+    }
+
+    @supports ((position: -webkit-sticky) or (position: sticky)) {
+        .docs-sidebar .docs-nav {
+            position: sticky;
+            position: -webkit-sticky;
+            top: 8rem;
+        }
+
+        .docs-sidebar .docs-nav .nav-item a:focus {
+            box-shadow: none;
+        }
+    }
+}
+
+.docs-nav-clear {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .docs-sidebar {
+        background: #fff;
+        height: 100%;
+        left: 0;
+        overflow-y: auto;
+        padding: 6rem 3rem;
+        position: fixed;
+        top: 0;
+        -webkit-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        transform: translateX(-100%);
+        transition: transform .2s ease, -webkit-transform .2s ease;
+        transition: transform .2s ease;
+        transition: -webkit-transform .2s ease;
+        width: 24rem;
+        z-index: 400;
+        display: block;
+    }
+
+    .docs-sidebar:target {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        transition: transform .2s ease, -webkit-transform .2s ease;
+        transition: transform .2s ease;
+        transition: -webkit-transform .2s ease;
+    }
+
+    .docs-sidebar:target + .docs-nav-clear {
+        display: block;
+    }
+
+    .docs-nav-clear {
+        background: rgba(0, 0, 0, .15);
+        display: none;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 100%;
+        z-index: 300;
+    }
+}
+
+.grid-footer a {
+    color: #727e96;
+}
+
+/*fix for header*/
+.grid-header .btn-link {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.tile-centered {
+    margin-right: 15px;
+}
