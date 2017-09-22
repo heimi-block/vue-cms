@@ -13,7 +13,7 @@
 - vuejs-paginate
 - vuex
 
-## Build Setup
+## Build Setup[依赖于node-cms,并7000端口挂载]
 
 ``` bash
 # install dependencies
