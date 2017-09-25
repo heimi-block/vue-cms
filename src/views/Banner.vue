@@ -71,7 +71,7 @@
                 <button @click="deleteBanners(`${checkedOptions}`)" :disabled="banners.length==0?true:false" class="btn">批量删除</button>
               </span>
               <span class="float-right">
-    <paginate :pageCount="Number(`${count/10}`)" :prevText="'上一页'" :nextText="'下一页'" :containerClass="'pagination'" :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'" :clickHandler="clickCallback">
+    <paginate :pageCount="Math.floor(Number(`${count/10+1}`))" :prevText="'上一页'" :nextText="'下一页'" :containerClass="'pagination'" :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'" :clickHandler="clickCallback">
     </paginate> 
               </span>
             </div>

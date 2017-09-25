@@ -12,10 +12,22 @@ const stopLoading = (commit, start, timeAllowed = 400) => {
 }
 const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
 export default {
-
-  saveBanner ({ state, commit, dispatch }) {
-    axios.post('/api/banner',
-              state.banner, // 注解: axios -> post和get请求，data的放置位置稍微有区别
+  getArticle ({ commit }, id) {
+    const start = beginLoading(commit)
+    axios.get('/api/post/' + id, {
+      headers: {
+        'X-MC-TOKEN': token
+      }
+    }).then((res) => {
+      if (res.data.code === 1) {
+        commit('SET_ARTICLE', res.data.result)
+        stopLoading(commit, start)
+      }
+    })
+  },
+  saveArticle ({ state, commit, dispatch }) {
+    axios.post('/api/post',
+            state.article,
       {
         headers: {
           'X-MC-TOKEN': token
@@ -23,13 +35,26 @@ export default {
       }).then((res) => {
         if (res.data.code === 1) {
           alert('添加成功')
-          dispatch('getBanners')
         }
       })
   },
-  getBanners ({ commit }, page) {
+  updateArticle ({ state, commit, dispatch }) {
+    axios.put('/api/post/' + state.article.id,
+            state.article,
+      {
+        headers: {
+          'X-MC-TOKEN': token
+        }
+      }).then((res) => {
+        if (res.data.code === 1) {
+          alert('更新成功')
+          dispatch('getArticles')
+        }
+      })
+  },
+  getArticles ({ commit }, page) {
     const start = beginLoading(commit)
-    axios.get('/api/banner', {
+    axios.get('/api/post', {
       params: {
         page: page
       },
@@ -38,28 +63,28 @@ export default {
       }
     }).then((res) => {
       if (res.data.code === 1) {
-        commit('SET_BANNERS', res.data.result.data)
+        commit('SET_ARTICLES', res.data.result.data)
         commit('SET_COUNT', res.data.result.count)
         stopLoading(commit, start)
       }
     })
   },
-  deleteBanner ({ state, commit, dispatch }, id) {
-    axios.delete('/api/banner/' + id, {
+  deleteArticle ({ state, commit, dispatch }, id) {
+    axios.delete('/api/post/' + id, {
       headers: {
         'X-MC-TOKEN': token
       }
     }).then((res) => {
       if (res.data.code === 1) {
         alert('删除成功')
-        dispatch('getBanners')
+        dispatch('getArticles')
       }
     })
   },
-  deleteBanners ({ state, commit, dispatch }, idArray) {
+  deleteArticles ({ state, commit, dispatch }, idArray) {
     let deleteArray = idArray.split(',')
     deleteArray.forEach((item, i) => {
-      axios.delete('/api/banner/' + item, {
+      axios.delete('/api/post/' + item, {
         headers: {
           'X-MC-TOKEN': token
         }
@@ -67,36 +92,22 @@ export default {
         if (res.data.code === 1) {
           if (i === deleteArray.length - 1) {
             alert('全部删除成功')
-            dispatch('getBanners')
+            dispatch('getArticles')
           }
         }
       })
-      dispatch('getBanners')
+      dispatch('getArticles')
     })
   },
-  updateBanner ({ state, commit, dispatch }) {
-    axios.put('/api/banner/' + state.banner.id,
-              state.banner,
-      {
-        headers: {
-          'X-MC-TOKEN': token
-        }
-      }).then((res) => {
-        if (res.data.code === 1) {
-          alert('更新成功')
-          dispatch('getBanners')
-        }
-      })
-  },
-  getPostsOptions ({ commit }) {
+  getCategorysOptions ({ commit }) {
     const start = beginLoading(commit)
-    axios.get('/api/post?isPaging=false', {
+    axios.get('/api/category?isPaging=false', {
       headers: {
         'X-MC-TOKEN': token
       }
     }).then((res) => {
       if (res.data.code === 1) {
-        commit('SET_POSTS_OPTIONS', res.data.result.data)
+        commit('SET_CATEGORYS_OPTIONS', res.data.result.data)
         stopLoading(commit, start)
       }
     })

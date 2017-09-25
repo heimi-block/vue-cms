@@ -88,6 +88,10 @@
 import TopBar from './../components/TopBar'
 import SideBar from './../components/SideBar'
 
+import Vue from 'vue'
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
+
 // Vue.js 知识
 // html标签固有属性比如value,disabled 可以使用:value="{{}}" :disabled="true"赋值
 // class属性可以使用 v-bind:class=""  style内联属性 使用 v-bind:style="{color:red}"

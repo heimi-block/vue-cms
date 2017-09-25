@@ -12,24 +12,9 @@ const stopLoading = (commit, start, timeAllowed = 400) => {
 }
 const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
 export default {
-
-  saveBanner ({ state, commit, dispatch }) {
-    axios.post('/api/banner',
-              state.banner, // 注解: axios -> post和get请求，data的放置位置稍微有区别
-      {
-        headers: {
-          'X-MC-TOKEN': token
-        }
-      }).then((res) => {
-        if (res.data.code === 1) {
-          alert('添加成功')
-          dispatch('getBanners')
-        }
-      })
-  },
-  getBanners ({ commit }, page) {
+  getGroups ({ commit }, page) {
     const start = beginLoading(commit)
-    axios.get('/api/banner', {
+    axios.get('/api/group', {
       params: {
         page: page
       },
@@ -38,28 +23,42 @@ export default {
       }
     }).then((res) => {
       if (res.data.code === 1) {
-        commit('SET_BANNERS', res.data.result.data)
+        commit('SET_GROUPS', res.data.result.data)
         commit('SET_COUNT', res.data.result.count)
         stopLoading(commit, start)
       }
     })
   },
-  deleteBanner ({ state, commit, dispatch }, id) {
-    axios.delete('/api/banner/' + id, {
+  saveGroup ({ state, commit, dispatch }) {
+    axios.post('/api/group',
+    state.group, // 注解: axios -> post和get请求，data的放置位置稍微有区别
+      {
+        headers: {
+          'X-MC-TOKEN': token
+        }
+      }).then((res) => {
+        if (res.data.code === 1) {
+          alert('添加成功')
+          dispatch('getGroups')
+        }
+      })
+  },
+  deleteGroup ({ state, commit, dispatch }, id) {
+    axios.delete('/api/group/' + id, {
       headers: {
         'X-MC-TOKEN': token
       }
     }).then((res) => {
       if (res.data.code === 1) {
         alert('删除成功')
-        dispatch('getBanners')
+        dispatch('getGroups')
       }
     })
   },
-  deleteBanners ({ state, commit, dispatch }, idArray) {
+  deleteGroups ({ state, commit, dispatch }, idArray) {
     let deleteArray = idArray.split(',')
     deleteArray.forEach((item, i) => {
-      axios.delete('/api/banner/' + item, {
+      axios.delete('/api/group/' + item, {
         headers: {
           'X-MC-TOKEN': token
         }
@@ -67,16 +66,16 @@ export default {
         if (res.data.code === 1) {
           if (i === deleteArray.length - 1) {
             alert('全部删除成功')
-            dispatch('getBanners')
+            dispatch('getGroups')
           }
         }
       })
-      dispatch('getBanners')
+      dispatch('getGroups')
     })
   },
-  updateBanner ({ state, commit, dispatch }) {
-    axios.put('/api/banner/' + state.banner.id,
-              state.banner,
+  updateGroup ({ state, commit, dispatch }) {
+    axios.put('/api/group/' + state.group.id,
+            state.group, // 注解: axios -> post和get请求，data的放置位置稍微有区别
       {
         headers: {
           'X-MC-TOKEN': token
@@ -84,21 +83,8 @@ export default {
       }).then((res) => {
         if (res.data.code === 1) {
           alert('更新成功')
-          dispatch('getBanners')
+          dispatch('getGroups')
         }
       })
-  },
-  getPostsOptions ({ commit }) {
-    const start = beginLoading(commit)
-    axios.get('/api/post?isPaging=false', {
-      headers: {
-        'X-MC-TOKEN': token
-      }
-    }).then((res) => {
-      if (res.data.code === 1) {
-        commit('SET_POSTS_OPTIONS', res.data.result.data)
-        stopLoading(commit, start)
-      }
-    })
   }
 }

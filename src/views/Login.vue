@@ -21,10 +21,10 @@
                             <h3>登 入</h3>
                         </header>
                         <div class="form-group">
-                            <input class="form-input" v-model="email" autocomplete="off" type="text" placeholder="請輸入你的郵箱">
+                            <input class="form-input" v-model="email" autocomplete="off" type="text" placeholder="请输入你的邮箱账号">
                         </div>
                         <div class="form-group">
-                            <input class="form-input" v-model="password" autocomplete="off" type="password" placeholder="請輸入你的密碼">
+                            <input class="form-input" v-model="password" autocomplete="off" type="password" placeholder="请输入你的密码">
                             <p class="form-input-hint">{{errInfo}}</p>
                         </div>
                         <div class="form-group">
@@ -39,14 +39,12 @@
         <footer class="section-footer bg-gray">
             <section id="copyright" class="grid-footer container grid-960">
                 <p>
-                    <a href="#" target="_blank">4MWorkOrder</a> |
-                    <a href="#" target="_blank">GitHub Repo</a> |
-                    <a href="#" target="_blank">Price</a> | Version
+                    <a href="http://order.4-m.cn" target="_blank">4MWorkOrder</a> |
+                    Version
                     <span class="version"></span>
                 </p>
                 <p>Designed and built with ♥ by
-                    <a href="https://www.4-m.cn" target="_blank">4mdevstudio</a>. Licensed under the
-                    <a href="#" target="_blank">MIT License</a>.</p>
+                    <a href="https://www.4-m.cn/" target="_blank">4mdevstudio</a> & <a href="http://www.timesmarketing.tw/" target="_blank">TimesMarketing</a>.</p>
             </section>
         </footer>
     </div>

@@ -80,7 +80,7 @@
               </span>
               <span class="float-right">
                         <!--Paging 分页组件-->
-    <paginate :pageCount="Number(`${count/10}`)" :prevText="'上一页'" :nextText="'下一页'" :containerClass="'pagination'" :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'" :clickHandler="clickCallback">
+    <paginate :pageCount="Math.floor(Number(`${count/10+1}`))" :prevText="'上一页'" :nextText="'下一页'" :containerClass="'pagination'" :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'" :clickHandler="clickCallback">
     </paginate>
               </span>
             </div>
@@ -226,7 +226,7 @@ export default {
       // form.append('chunk','0')添加form表单中其他数据
       console.log(form.get('upfile')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
       // axios configs
-      let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
+      const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
       // 添加请求头
       let config = {
         headers: {
@@ -236,7 +236,6 @@ export default {
       }
       axios.post('/api/attachment', form, config)
         .then(response => {
-          console.log(response.data.url)
           alert('上传成功')
           this.getAttachments()
         })
@@ -247,7 +246,7 @@ export default {
       let form = new FormData() // 创建form对象
       form.append('upfile', file, file.name)
       // axios configs
-      let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
+      const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
       // 添加请求头
       let config = {
         headers: {
@@ -256,17 +255,15 @@ export default {
         }
       }
       axios.post('/api/attachment', form, config)
-        .then(response => {
-          console.log(response.data.url)
+        .then(res => {
           let that = this
-          that.updateCurrentUrl = response.data.url
-          console.log(response.data.extname)
-          that.updateCurrentExtname = response.data.extname
-          that.updateCurrentLastId = response.data._id
+          that.updateCurrentUrl = res.data.result.data.url
+          that.updateCurrentExtname = res.data.result.data.extname
+          that.updateCurrentLastId = res.data.result.data._id
         })
     },
     changeImageOrFile () {
-      let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
+      const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
       // 添加请求头
       let config = {
         headers: {
@@ -278,7 +275,7 @@ export default {
       formBody.extname = this.updateCurrentExtname
       formBody.url = this.updateCurrentUrl
       formBody.lastId = this.updateCurrentLastId
-      axios.put('/api/attachment', formBody, config)
+      axios.put('/api/attachment/' + formBody.id, formBody, config)
         .then(response => {
           alert('更新成功')
           this.getAttachments()

@@ -14,7 +14,7 @@
               <h3>文章分类</h3>
             </header>
             <!--Modal:增加文章分类按钮-->
-            <a @click="modalSaveActive?modalSaveActive=false:modalSaveActive=true" class="float-right btn btn-primary btn-action btn-lg" style="border-radius: 2em">
+            <a @click="saveCategoryOpenModal" class="float-right btn btn-primary btn-action btn-lg" style="border-radius: 2em">
               <i class="icon icon-plus"></i>
             </a>
             <table class="table table-striped">
@@ -83,7 +83,7 @@
                               <label class="form-label">名称</label>
                             </div>
                             <div class="col-10">
-                              <input class="form-input" type="text" @input="ADD_NEW_CATEGORY({name: $event.target.value})" placeholder="请输入文章分类名称" />
+                              <input class="form-input" type="text" v-model="name" @input="ADD_NEW_CATEGORY({name: $event.target.value})" placeholder="请输入文章分类名称" />
                             </div>
                           </div>
                         </div>
@@ -159,7 +159,8 @@ export default {
       modalSaveActive: false,
       checkedOptions: [],
       updateCurrentId: '',
-      updateCurrentName: ''
+      updateCurrentName: '',
+      name: ''
     }
   },
   components: {
@@ -203,6 +204,10 @@ export default {
       // 获取到更新的id,和name
       this.updateCurrentId = id
       this.updateCurrentName = name
+    },
+    saveCategoryOpenModal () {
+      this.modalSaveActive = true
+      this.name = ''
     },
     clickCallback (page) {
       // 分页请求数据

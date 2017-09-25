@@ -183,10 +183,8 @@ export default {
             // an single example for using formData to post to server
       var form = new FormData()
       form.append('upfile', e.target.files[0])
-            // do your post
-      alert('//do your post')
             // axios configs
-      let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
+      const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
             // 添加请求头
       let config = {
         headers: {
@@ -195,12 +193,11 @@ export default {
         }
       }
       axios.post('/api/attachment', form, config)
-                .then(response => {
-                  console.log(response.data.url)
+                .then(res => {
                   let self = this
                   var range = self.editor.getSelection(true)
                   var length = range.index
-                  self.editor.insertEmbed(length, 'image', response.data.url)
+                  self.editor.insertEmbed(length, 'image', res.data.result.data.url)
                 })
     },
         // 发表文章，搜集参数，提交action
@@ -228,7 +225,7 @@ export default {
             // form.append('chunk','0');//添加form表单中其他数据
       console.log(form.get('upfile')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
             // axios configs
-      let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
+      const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
             // 添加请求头
       let config = {
         headers: {
@@ -237,9 +234,8 @@ export default {
         }
       }
       axios.post('/api/attachment', form, config)
-                .then(response => {
-                  console.log(response.data.url)
-                  this.coverUrl = response.data.url
+                .then(res => {
+                  this.coverUrl = res.data.result.data.url
                 })
     }
   },
