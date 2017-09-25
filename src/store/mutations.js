@@ -3,11 +3,8 @@ export default {
     // 可以通过 store.state 来获取状态对象， console.log(store.state.count)
     // 以及通过 store.commit 方法触发状态变更 store.commit('increment')
     // function * 更新用户信息
-  updateUserInfo (state, payload) {
-    state.nickName = payload.nickName
-    state.role = payload.role
-    state.token = payload.token
-    state.privileges = payload.privileges
+  updateUserInfo (state, user) {
+    state.user = user
   },
   LOADING_TOGGLE: (state, isLoading) => {
     state.isLoading = isLoading

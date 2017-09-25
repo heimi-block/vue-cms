@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       //加载代理。不然无法对另一个node.js后端服务器发起请求
-      '/user/*':{
+      '/auth':{
         target: 'http://localhost:7000'
       },
       '/api/*':{

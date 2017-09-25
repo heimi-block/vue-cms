@@ -14,10 +14,10 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     isLoading: false,
-    nickName: '',
-    role: '',
-    token: '',
-    privileges: '',
+    // nickName: '',
+    // role: '',
+    // privileges: '',
+    user: {},
     meta: {  // 无需设定键值对，会根据后端json填充
       // description: '',
       // keywords: '',

@@ -17,7 +17,7 @@
                         </div>
                         <div class="tile-content">
                             <!-- NickName -->
-                            <span v-text="nickName" v-if="nickName"></span>
+                            <span v-text="user.email" v-if="user.email"></span>
                         </div>
                     </div>
                     <a @click="loginOut" class="btn btn-primary">登出</a>
@@ -29,14 +29,14 @@
 
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   data () {
     return {
     }
   },
   computed: {
-    ...mapState(['nickName', 'role', 'token', 'privileges', 'isLoading'])
+    ...mapState(['user', 'isLoading'])
   },
   mounted () {
     this.checkLogin()
@@ -46,20 +46,15 @@ export default {
     checkLogin () {
             // 从登录页面->成功->获取本地LocalStorage
       let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-      axios.get('/user/checkLogin', {
+      axios.get('/auth', {
         headers: {
-          'X-MC-TOKEN': token
+          'X-MC-TOKEN': 'Bearer ' + token
         }
       }).then((res) => {
-        if (!res.data.err) {
-                    // 你不能直接改变 store 中的状态。
-                    // 改变 store 中的状态的唯一途径就是显式地提交(commit) mutations。
-          this.$store.commit('updateUserInfo', {
-            nickName: res.data.data.info.email,
-            role: res.data.data.info.role,
-            token: res.data.data.token,
-            privileges: res.data.data.info.privileges
-          })
+        if (res.data.code === 1) {
+          // 你不能直接改变 store 中的状态。
+          // 改变 store 中的状态的唯一途径就是显式地提交(commit) mutations。
+          this.$store.commit('updateUserInfo', res.data.result)
         } else {
           this.$router.push({ path: '/login' })
         }
@@ -67,26 +62,11 @@ export default {
     },
         // 退出登录
     loginOut () {
-            // 从Header组件->注销->清除本地LocalStorage及重置服务端用户token字段数据
-      axios.get('/user/loginOut', {
-        headers: {
-          'X-MC-TOKEN': this.$store.state.token
-        }
-      }).then((res) => {
-        if (!res.data.err) {
-                    // 你不能直接改变 store 中的状态。
-                    // 改变 store 中的状态的唯一途径就是显式地提交(commit) mutations。
-          this.$store.commit('updateUserInfo', {
-            nickName: '',
-            role: '',
-            token: '',
-            privileges: ''
-          })
-          window.localStorage.setItem('X-4MDEVSTUDIO-TOKEN', '')
-          this.$router.push({ path: '/login' })
-        }
-      })
-    }
+            // 从Header组件->注销->清除本地LocalStorage及重置服务端用户token字段数据 --> 使用JSON WEB TOKEN只需清理本地即可
+      window.localStorage.setItem('X-4MDEVSTUDIO-TOKEN', '')
+      this.$router.push({ path: '/login' })
+    },
+    ...mapMutations(['updateUserInfo'])
   }
 }
 </script>

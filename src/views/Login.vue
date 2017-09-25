@@ -86,13 +86,13 @@ export default {
             // 从Vuex的Store中获取状态token，如果存在发起验证请求，验证成功，则登录成功,否则token失效，登录失败
             // 如果没有获取到token,等同登录失败
       let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-      axios.get('/user/checkLogin', {
+      axios.get('/auth', {
         headers: {
-          'X-MC-TOKEN': token
+          'X-MC-TOKEN': 'Bearer ' + token
         }
       }).then((res) => {
-        if (!res.data.err) {
-           // 如果已经登录，那么不执行登录操作，直接跳转
+        if (res.data.code === 1) {
+          // 如果已经登录，那么不执行登录操作，直接跳转
           window.location.href = '/'
         }
       })
@@ -106,22 +106,13 @@ export default {
         this.errInfo = '请输入正确格式的密码'
         return
       }
-      axios.post('/user/session', {
+      axios.post('/auth', {
         email: this.email,
         password: this.password
       }).then((res) => {
-        if (!res.data.err) {
-            // 你不能直接改变 store 中的状态。
-            // console.log("1"+this.$store.state.nickName)
-            // 改变 store 中的状态的唯一途径就是显式地提交(commit) mutations。
-          this.$store.commit('updateUserInfo', {
-            nickName: res.data.data.info.realName,
-            role: res.data.data.info.role,
-            token: res.data.data.token,
-            privileges: res.data.data.info.privileges
-          })
-            // 本地存储token,防止单页面刷新丢失state
-          window.localStorage.setItem('X-4MDEVSTUDIO-TOKEN', this.$store.state.token)
+        if (res.data.code === 1) {
+          // 本地存储token,防止单页面刷新丢失state
+          window.localStorage.setItem('X-4MDEVSTUDIO-TOKEN', res.data.result.token)
           window.location.href = '/'
         } else {
           this.errInfo = '用户不存在或密码错误'
