@@ -1,6 +1,8 @@
 // 引入网络请求插件axios
 import axios from 'axios'
 import bannerMan from './banner.ac'
+import metaMan from './meta.ac'
+import infoMan from './info.ac'
 const beginLoading = commit => {
   commit('LOADING_TOGGLE', true)
   return Date.now()
@@ -12,6 +14,7 @@ const stopLoading = (commit, start, timeAllowed = 400) => {
 }
 
 export default {
+  // Banner ======================================================
   saveBanner ({ state, commit, dispatch }) {
     bannerMan.saveBanner({ state, commit, dispatch })
   },
@@ -29,6 +32,20 @@ export default {
   },
   getPostsOptions ({ commit }) {
     bannerMan.getPostsOptions({ commit })
+  },
+  // MetaJs =======================================================
+  getMeta ({ commit }) {
+    metaMan.getMeta({ commit })
+  },
+  saveMeta ({ state, commit }) {
+    metaMan.saveMeta({ state, commit })
+  },
+  // InfoJs =======================================================
+  getInfo ({ commit }) {
+    infoMan.getInfo({ commit })
+  },
+  saveInfo ({ state, commit }) {
+    infoMan.saveInfo({ state, commit })
   },
   getCategorys ({ commit }, page) {
     const start = beginLoading(commit)
@@ -372,66 +389,6 @@ export default {
       })
       dispatch('getContactForms')
     })
-  },
-  getMeta ({ commit }) {
-    const start = beginLoading(commit)
-    let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-    axios.get('/api/meta', {
-      headers: {
-        'X-MC-TOKEN': token
-      }
-    }).then((res) => {
-      if (!res.data.err) {
-        commit('SET_META', res.data.data)
-        stopLoading(commit, start)
-      }
-    })
-  },
-  saveMeta ({ state, commit }) {
-    const start = beginLoading(commit)
-    let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-    axios.post('/api/meta',
-            state.meta, // 注解: axios -> post和get请求，data的放置位置稍微有区别
-      {
-        headers: {
-          'X-MC-TOKEN': token
-        }
-      }).then((res) => {
-        if (!res.data.err) {
-          alert('更新成功')
-          stopLoading(commit, start)
-        }
-      })
-  },
-  getInfo ({ commit }) {
-    const start = beginLoading(commit)
-    let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-    axios.get('/api/info', {
-      headers: {
-        'X-MC-TOKEN': token
-      }
-    }).then((res) => {
-      if (!res.data.err) {
-        commit('SET_INFO', res.data.data)
-        stopLoading(commit, start)
-      }
-    })
-  },
-  saveInfo ({ state, commit }) {
-    const start = beginLoading(commit)
-    let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-    axios.post('/api/info',
-            state.info, // 注解: axios -> post和get请求，data的放置位置稍微有区别
-      {
-        headers: {
-          'X-MC-TOKEN': token
-        }
-      }).then((res) => {
-        if (!res.data.err) {
-          alert('更新成功')
-          stopLoading(commit, start)
-        }
-      })
   },
   getGroups ({ commit }, page) {
     const start = beginLoading(commit)

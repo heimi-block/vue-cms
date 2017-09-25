@@ -14,17 +14,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     isLoading: false,
-    // nickName: '',
-    // role: '',
-    // privileges: '',
-    user: {},
-    meta: {  // 无需设定键值对，会根据后端json填充
-      // description: '',
-      // keywords: '',
-      // headerscript: '',
-      // footerscript: '',
-      // themecss: '',
-    },
+    user: {}, // 用户信息
+    meta: {}, // 无需设定键值对，会根据后端json填充
     info: {}, // 网站联络信息
     categorys: [], // 当前页文章分类
     categorysOptions: [], // 文章分类全部SelectOptions
