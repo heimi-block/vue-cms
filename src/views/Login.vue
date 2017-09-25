@@ -4,7 +4,7 @@
             <section class="grid-header container grid-960">
                 <nav class="navbar">
                     <section class="navbar-section">
-                        <a href="index.html" class="navbar-brand mr-10">4MCloudServer</a>
+                        <a href="index.html" class="navbar-brand mr-10">4MCMS</a>
                     </section>
                     <section class="navbar-section">
                         <a href="/" class="btn btn-primary">访问控制台</a>
