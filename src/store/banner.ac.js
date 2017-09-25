@@ -24,7 +24,6 @@ export default {
         if (!res.data.err) {
           alert('添加成功')
           dispatch('getBanners')
-                      // TODO  ####
         }
       })
   },
@@ -59,7 +58,6 @@ export default {
     })
   },
   deleteBanner ({ state, commit, dispatch }, id) {
-    alert('你确定要删除吗？')
     axios.delete('/api/banner/' + id, {
       headers: {
         'X-MC-TOKEN': token
@@ -74,7 +72,6 @@ export default {
       // 批量删除操作
   deleteBanners ({ state, commit, dispatch }, idArray) {
     let deleteArray = idArray.split(',')
-    alert('你确定要删除选中的' + deleteArray.length + '项吗？')
     // for(let del of deleteArray){ //for map的话可以获取到index const [del,index] of deleteArray
     // 数组可以使用forEach （item，i）
     deleteArray.forEach((item, i) => {

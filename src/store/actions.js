@@ -15,12 +15,6 @@ export default {
   saveBanner ({ state, commit, dispatch }) {
     bannerMan.saveBanner({ state, commit, dispatch })
   },
-  getBanners ({ commit }, page) {
-    bannerMan.getBanners({ commit }, page)
-  },
-  getPostsOptions ({ commit }) {
-    bannerMan.getPostsOptions({ commit })
-  },
   deleteBanner ({ state, commit, dispatch }, id) {
     bannerMan.deleteBanner({ state, commit, dispatch }, id)
   },
@@ -29,6 +23,12 @@ export default {
   },
   updateBanner ({ state, commit, dispatch }) {
     bannerMan.updateBanner({ state, commit, dispatch })
+  },
+  getBanners ({ commit }, page) {
+    bannerMan.getBanners({ commit }, page)
+  },
+  getPostsOptions ({ commit }) {
+    bannerMan.getPostsOptions({ commit })
   },
   getCategorys ({ commit }, page) {
     const start = beginLoading(commit)
