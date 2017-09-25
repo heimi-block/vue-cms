@@ -15,7 +15,7 @@
               <h3>大轮播管理</h3>
             </header>
             <!--Modal:上传轮播Banner按钮-->
-            <a @click="modalSaveActive?modalSaveActive=false:modalSaveActive=true" class="float-right btn btn-primary btn-action btn-lg" style="border-radius: 2em">
+            <a @click="saveBannerOpenModal" class="float-right btn btn-primary btn-action btn-lg" style="border-radius: 2em">
               <i class="icon icon-plus"></i>
             </a>
             <table class="table table-striped">
@@ -301,6 +301,14 @@ export default {
   methods: {
     ...mapActions(['getBanners', 'saveBanner', 'getPostsOptions', 'deleteBanners', 'deleteBanner', 'updateBanner']),
     ...mapMutations(['SET_BANNERS', 'SET_COUNT']),
+    saveBannerOpenModal () {
+      this.modalSaveActive = true
+      this.order = ''
+      this.imgUrl = ''
+      this.title = ''
+      this.postHref = ''
+      this.isShow = 'true'
+    },
     saveBannerPre () {
       let formBody = {}
       formBody.order = this.order
@@ -318,7 +326,7 @@ export default {
       let form = new FormData() // 创建form对象
       form.append('upfile', file, file.name)
       // axios configs
-      let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
+      const token = 'Bearer ' + window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
       // 添加请求头
       let config = {
         headers: {
@@ -327,10 +335,9 @@ export default {
         }
       }
       axios.post('/api/attachment', form, config)
-        .then(response => {
-          console.log(response.data.url)
+        .then(res => {
           let that = this
-          that.addImageUrl = response.data.url
+          that.addImageUrl = res.data.result.data.url
         })
     },
     updateBannerOpenModal (id, order, imgUrl, title, postHref, isShow) {

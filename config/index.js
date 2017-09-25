@@ -29,17 +29,17 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       //加载代理。不然无法对另一个node.js后端服务器发起请求
-      '/auth':{
+      '/api':{
         target: 'http://localhost:7000'
       },
       '/api/*':{
-        target: 'http://localhost:7000' 
+        target: 'http://localhost:7000'
       },
       '/api/*/*':{
         target: 'http://localhost:7000' 
       },
       '/uploads/*':{
-        target: 'http://localhost:7000'        
+        target: 'http://localhost:7000' 
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

@@ -86,7 +86,7 @@ export default {
             // 从Vuex的Store中获取状态token，如果存在发起验证请求，验证成功，则登录成功,否则token失效，登录失败
             // 如果没有获取到token,等同登录失败
       let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-      axios.get('/auth', {
+      axios.get('/api/auth', {
         headers: {
           'X-MC-TOKEN': 'Bearer ' + token
         }
@@ -106,7 +106,7 @@ export default {
         this.errInfo = '请输入正确格式的密码'
         return
       }
-      axios.post('/auth', {
+      axios.post('/api/auth', {
         email: this.email,
         password: this.password
       }).then((res) => {

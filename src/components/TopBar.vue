@@ -46,7 +46,7 @@ export default {
     checkLogin () {
             // 从登录页面->成功->获取本地LocalStorage
       let token = window.localStorage.getItem('X-4MDEVSTUDIO-TOKEN')
-      axios.get('/auth', {
+      axios.get('/api/auth', {
         headers: {
           'X-MC-TOKEN': 'Bearer ' + token
         }
